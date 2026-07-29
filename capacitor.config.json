@@ -1,0 +1,13 @@
+{
+  "appId": "com.bagongilog.hideandseek",
+  "appName": "Bagong Ilog Hide & Seek",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
