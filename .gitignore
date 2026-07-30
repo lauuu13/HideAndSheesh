@@ -1,6 +1,0 @@
-node_modules/
-dist/
-android/
-src-tauri/target/
-*.log
-.DS_Store
