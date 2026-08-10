@@ -24,7 +24,7 @@ const MAX_PLAYERS = 10;
 
 // House floor plan constants — shared between buildMap() (geometry)
 // and the player movement code (floor-height resolution on stairs).
-const FLOOR_HEIGHT = 4.2;
+const FLOOR_HEIGHT = 5.6;
 const STAIR_X_MIN = -3, STAIR_X_MAX = 3, STAIR_Z_MIN = 3, STAIR_Z_MAX = 9;
 const HOUSE_X_MIN = -15.6, HOUSE_X_MAX = 15.6, HOUSE_Z_MIN = -12.6, HOUSE_Z_MAX = 12.6;
 
@@ -443,18 +443,21 @@ function makeFaceTexture() {
   // the front of each character's head sphere.
   return makeCanvasTexture((ctx, s) => {
     ctx.clearRect(0, 0, s, s);
-    ctx.fillStyle = '#2b2b2b';
-    ctx.beginPath(); ctx.arc(s * 0.35, s * 0.42, s * 0.06, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(s * 0.65, s * 0.42, s * 0.06, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#3a2a1a';
-    ctx.lineWidth = s * 0.02;
+    ctx.fillStyle = '#241a12';
+    ctx.beginPath(); ctx.arc(s * 0.34, s * 0.44, s * 0.085, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(s * 0.66, s * 0.44, s * 0.085, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(s * 0.365, s * 0.42, s * 0.02, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(s * 0.685, s * 0.42, s * 0.02, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#2a1a10';
+    ctx.lineWidth = s * 0.03;
     ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(s * 0.27, s * 0.32); ctx.lineTo(s * 0.43, s * 0.30); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(s * 0.57, s * 0.30); ctx.lineTo(s * 0.73, s * 0.32); ctx.stroke();
-    ctx.strokeStyle = '#8a4a3a';
-    ctx.lineWidth = s * 0.025;
-    ctx.beginPath(); ctx.arc(s * 0.5, s * 0.5, s * 0.14, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
-  }, 128);
+    ctx.beginPath(); ctx.moveTo(s * 0.24, s * 0.29); ctx.lineTo(s * 0.44, s * 0.26); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(s * 0.56, s * 0.26); ctx.lineTo(s * 0.76, s * 0.29); ctx.stroke();
+    ctx.strokeStyle = '#7a2e20';
+    ctx.lineWidth = s * 0.035;
+    ctx.beginPath(); ctx.arc(s * 0.5, s * 0.52, s * 0.19, 0.12 * Math.PI, 0.88 * Math.PI); ctx.stroke();
+  }, 160);
 }
 
 function makeWoodFloorTexture() {
@@ -654,6 +657,11 @@ function buildFloor(baseY, level) {
   wallBox(0.25, wallH, 6.5, 0xe9e2d0, 0, y, -9.75);
   wallBox(0.25, wallH, 6.5, 0xe9e2d0, 0, y, -0.25);
 
+  // Foyer/hallway pinch near the front entrance — narrows the entry
+  // into a proper hall before opening into the wider rooms beyond
+  wallBox(0.25, wallH, 3.6, 0xe9e2d0, -3, y, -10.8);
+  wallBox(0.25, wallH, 3.6, 0xe9e2d0, 3, y, -10.8);
+
   // A few ceiling lamps for atmosphere
   addLampFixture(-8, baseY + wallH - 0.3, -6);
   addLampFixture(8, baseY + wallH - 0.3, -6);
@@ -682,11 +690,14 @@ function buildFloor(baseY, level) {
     wallBox(2, 0.9, 1, 0xced4da, 10, 0.45, -7); // kitchen island
     wallBox(0.4, 0.6, 0.4, 0x495057, 13.5, 0.3, -12.5); // trash bin
 
-    // --- Back rooms: bathroom (left) + laundry/storage (right) ---
-    wallBox(0.25, wallH, 4, 0xe9e2d0, 0, y, 11); // back divider
+    // --- Back rooms: enclosed bathroom (left) + laundry (right of it) + storage (far right) ---
+    wallBox(0.25, wallH, 4, 0xe9e2d0, 0, y, 11); // divider: laundry vs storage
+    wallBox(0.25, wallH, 4, 0xe9e2d0, -8, y, 11); // divider: bathroom vs laundry
+    wallBox(4.6, wallH, 0.25, 0xe9e2d0, -13, y, 9);   // bathroom front wall, west segment
+    wallBox(0.8, wallH, 0.25, 0xe9e2d0, -8.4, y, 9);  // bathroom front wall, east segment (door gap between)
     wallBox(0.6, 0.8, 0.6, 0xffffff, -11, 0.4, 11); // toilet
-    wallBox(0.8, 0.9, 0.5, 0xffffff, -7, 0.45, 11.7); // sink
-    wallBox(1.8, 0.7, 3, 0xffffff, -13.5, 0.35, 10); // tub
+    wallBox(0.8, 0.9, 0.5, 0xffffff, -13, 0.45, 11.7); // sink
+    wallBox(1.8, 0.7, 3, 0xffffff, -10, 0.35, 10.5); // tub
     wallBox(1.2, 1.8, 0.5, 0x8a6c4a, -15, 0.9, 12); // shelving unit
 
     wallBox(1, 1.2, 1, 0xadb5bd, 10, 0.6, 11.5); // washing machine
@@ -695,6 +706,15 @@ function buildFloor(baseY, level) {
     wallBox(1, 1, 1, 0x8a6c4a, 8, 0.5, 12.5); // extra crates
     wallBox(0.6, 1, 0.6, 0xadb5bd, 12, 0.5, 9.5); // utility bin
   } else {
+    // --- Hallway pinch mirrors the foyer below, leading to the bedroom wing ---
+    wallBox(0.25, wallH, 0.25, 0xe9e2d0, -3, y, -9); // hall post (visual anchor)
+    wallBox(0.25, wallH, 0.25, 0xe9e2d0, 3, y, -9);
+
+    // --- Home office, split off from Bedroom 2 ---
+    wallBox(0.25, wallH, 3.6, 0xe9e2d0, 11, y, -1.2);
+    wallBox(1.4, 1, 0.6, 0x8a6c4a, 13.5, baseY + 0.5, 0.5); // office desk
+    wallBox(0.6, 1, 0.6, 0x557153, 13.5, baseY + 0.5, 2); // office chair
+    wallBox(0.4, 2, 1.4, 0x5c3d2e, 15.3, baseY + 1, 1); // filing cabinet
     // --- Bedroom 1 (front-left) ---
     signPlane(2.2, 0.6, -8, baseY + 3.6, HOUSE_Z_MIN + 0.05, TEX.signBed1, 0);
     wallBox(2, 0.6, 3, 0x94a89a, -11, baseY + 0.3, -9); // bed
@@ -765,10 +785,10 @@ function makeLimbPivot(jointX, jointY, jointZ, radius, length, color) {
 
 function addFace(group, headY) {
   const face = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.34, 0.34),
-    new THREE.MeshBasicMaterial({ map: TEX.face, transparent: true, depthWrite: false })
+    new THREE.PlaneGeometry(0.4, 0.4),
+    new THREE.MeshBasicMaterial({ map: TEX.face, transparent: true, depthWrite: false, side: THREE.DoubleSide })
   );
-  face.position.set(0, headY + 0.03, 0.315);
+  face.position.set(0, headY + 0.03, 0.33);
   group.add(face);
 }
 
@@ -875,20 +895,11 @@ function buildAvatar(kind) {
     sleeveR.position.set(0.62, 1.35, 0);
     sleeveR.rotation.z = -0.25;
     group.add(sleeveL, sleeveR);
-
-    // Long skirt (tapis-style) instead of visible legs
-    const skirt = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.55, 0.4, 0.95, 10),
-      new THREE.MeshStandardMaterial({ color: c.color })
-    );
-    skirt.position.y = 0.42;
-    group.add(skirt);
-    parts.skirt = skirt; // swayed instead of true leg articulation, since legs are hidden
-  } else {
-    parts.legL = makeLimbPivot(-0.22, 0.8, 0, 0.16, 0.55, 0x2b2b2b);
-    parts.legR = makeLimbPivot(0.22, 0.8, 0, 0.16, 0.55, 0x2b2b2b);
-    group.add(parts.legL, parts.legR);
   }
+
+  parts.legL = makeLimbPivot(-0.22, 0.8, 0, 0.16, 0.55, isFemale ? 0x3a2f28 : 0x2b2b2b);
+  parts.legR = makeLimbPivot(0.22, 0.8, 0, 0.16, 0.55, isFemale ? 0x3a2f28 : 0x2b2b2b);
+  group.add(parts.legL, parts.legR);
 
   const head = new THREE.Mesh(
     new THREE.SphereGeometry(0.32, 20, 20),
@@ -925,13 +936,11 @@ function updateWalkAnimation(avatarEntry, dt, speedFraction) {
     if (parts.legR) parts.legR.rotation.x = -swing;
     if (parts.armL) parts.armL.rotation.x = -swing * 0.8;
     if (parts.armR) parts.armR.rotation.x = swing * 0.8;
-    if (parts.skirt) parts.skirt.rotation.z = Math.sin(avatarEntry.walkPhase * 0.5) * 0.04;
   } else {
     // ease back to a neutral standing pose
     ['legL', 'legR', 'armL', 'armR'].forEach((k) => {
       if (parts[k]) parts[k].rotation.x *= 0.8;
     });
-    if (parts.skirt) parts.skirt.rotation.z *= 0.8;
   }
 }
 
@@ -960,10 +969,9 @@ function rebuildLocalAvatar() {
 }
 
 function spawnLocalPlayer() {
-  // Open corridor between the living room furniture and the central
-  // wall — clear of every collider, so players never spawn stuck.
-  playerState.x = -4.5 + (Math.random() - 0.5) * 3;
-  playerState.z = -7.5 + (Math.random() - 0.5) * 3;
+  // Foyer (entry hall) — a proper room now, clear of all colliders
+  playerState.x = (Math.random() - 0.5) * 3;
+  playerState.z = -11 + (Math.random() - 0.5) * 1.5;
   playerState.ry = 0;
   playerState.pitch = 0;
   playerState.y = 0;
@@ -1034,8 +1042,8 @@ function updateLocalPlayer(dt) {
     const speed = MOVE_SPEED * (playerState.ducking ? 0.55 : 1);
     const forward = new THREE.Vector3(Math.sin(playerState.ry), 0, Math.cos(playerState.ry));
     const right = new THREE.Vector3(Math.cos(playerState.ry), 0, -Math.sin(playerState.ry));
-    const dx = (forward.x * -input.move.y + right.x * input.move.x) * speed * dt;
-    const dz = (forward.z * -input.move.y + right.z * input.move.x) * speed * dt;
+    const dx = (forward.x * -input.move.y - right.x * input.move.x) * speed * dt;
+    const dz = (forward.z * -input.move.y - right.z * input.move.x) * speed * dt;
 
     const nextX = playerState.x + dx;
     const nextZ = playerState.z + dz;
