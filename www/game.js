@@ -6,19 +6,19 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.m
 // (barong for men, filipiniana for women)
 // ============================================================
 const CHARACTERS = [
-  { id: 'chika',     name: 'Sen. Chika Ramos',      gender: 'F', color: 0xd6336c, accent: 0xffd43b },
-  { id: 'marites',   name: 'Sen. Marites dela Cruz', gender: 'F', color: 0x862e9c, accent: 0xffe066 },
-  { id: 'kalbo',     name: 'Sen. Bossing Kalbo',     gender: 'M', color: 0x2f6f4f, accent: 0xd4af37 },
-  { id: 'tito',      name: 'Sen. Tito Moustachio',   gender: 'M', color: 0x1971c2, accent: 0xd4af37 },
-  { id: 'smiley',    name: 'Sen. Smiley Santos',     gender: 'M', color: 0xf08c00, accent: 0xd4af37 },
-  { id: 'spread',    name: 'Sen. Kuya Spreadsheet',  gender: 'M', color: 0x495057, accent: 0xd4af37 },
-  { id: 'tsismosa',  name: 'Sen. Madam Tsismosa',    gender: 'F', color: 0xe64980, accent: 0xffd43b },
-  { id: 'glamour',   name: 'Sen. Glamour Garcia',    gender: 'F', color: 0xae3ec9, accent: 0xffe066 },
-  { id: 'bigote',    name: 'Sen. Mang Bigote',       gender: 'M', color: 0x5f3dc4, accent: 0xd4af37 },
-  { id: 'memo',      name: 'Sen. Sir Memo',          gender: 'M', color: 0x087f5b, accent: 0xd4af37 },
-  { id: 'attend',    name: 'Sen. Ate Attendance',    gender: 'F', color: 0xf76707, accent: 0xffd43b },
-  { id: 'copypaste', name: 'Sen. Cong. Copy-Paste',  gender: 'M', color: 0x1864ab, accent: 0xd4af37 },
-  { id: 'berto',     name: 'Sen. Budget Berto',      gender: 'M', color: 0x2b8a3e, accent: 0xd4af37 }
+  { id: 'chika',     name: 'Chika Ramos',      gender: 'F', color: 0xd6336c, accent: 0xffd43b },
+  { id: 'marites',   name: 'Marites dela Cruz', gender: 'F', color: 0x862e9c, accent: 0xffe066 },
+  { id: 'kalbo',     name: 'Bossing Kalbo',     gender: 'M', color: 0x2f6f4f, accent: 0xd4af37 },
+  { id: 'tito',      name: 'Tito Moustachio',   gender: 'M', color: 0x1971c2, accent: 0xd4af37 },
+  { id: 'smiley',    name: 'Smiley Santos',     gender: 'M', color: 0xf08c00, accent: 0xd4af37 },
+  { id: 'spread',    name: 'Kuya Spreadsheet',  gender: 'M', color: 0x495057, accent: 0xd4af37 },
+  { id: 'tsismosa',  name: 'Madam Tsismosa',    gender: 'F', color: 0xe64980, accent: 0xffd43b },
+  { id: 'glamour',   name: 'Glamour Garcia',    gender: 'F', color: 0xae3ec9, accent: 0xffe066 },
+  { id: 'bigote',    name: 'Mang Bigote',       gender: 'M', color: 0x5f3dc4, accent: 0xd4af37 },
+  { id: 'memo',      name: 'Sir Memo',          gender: 'M', color: 0x087f5b, accent: 0xd4af37 },
+  { id: 'attend',    name: 'Ate Attendance',    gender: 'F', color: 0xf76707, accent: 0xffd43b },
+  { id: 'copypaste', name: 'Cong. Copy-Paste',  gender: 'M', color: 0x1864ab, accent: 0xd4af37 },
+  { id: 'berto',     name: 'Budget Berto',      gender: 'M', color: 0x2b8a3e, accent: 0xd4af37 }
 ];
 const MAX_PLAYERS = 10;
 
@@ -438,27 +438,6 @@ function makeFlagTexture() {
   }, 128);
 }
 
-function makeFaceTexture() {
-  // Transparent-background decal: eyes, brows, and a smile, mounted on
-  // the front of each character's head sphere.
-  return makeCanvasTexture((ctx, s) => {
-    ctx.clearRect(0, 0, s, s);
-    ctx.fillStyle = '#241a12';
-    ctx.beginPath(); ctx.arc(s * 0.34, s * 0.44, s * 0.085, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(s * 0.66, s * 0.44, s * 0.085, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath(); ctx.arc(s * 0.365, s * 0.42, s * 0.02, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(s * 0.685, s * 0.42, s * 0.02, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = '#2a1a10';
-    ctx.lineWidth = s * 0.03;
-    ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(s * 0.24, s * 0.29); ctx.lineTo(s * 0.44, s * 0.26); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(s * 0.56, s * 0.26); ctx.lineTo(s * 0.76, s * 0.29); ctx.stroke();
-    ctx.strokeStyle = '#7a2e20';
-    ctx.lineWidth = s * 0.035;
-    ctx.beginPath(); ctx.arc(s * 0.5, s * 0.52, s * 0.19, 0.12 * Math.PI, 0.88 * Math.PI); ctx.stroke();
-  }, 160);
-}
 
 function makeWoodFloorTexture() {
   return makeCanvasTexture((ctx, s) => {
@@ -525,7 +504,6 @@ function initScene() {
     wall: makeWallTexture(),
     tile: makeSidewalkTexture(),
     window: makeWindowTexture(),
-    face: makeFaceTexture(),
     signLiving: makeSignTexture(['LIVING ROOM'], '#5c3d2e', '#ffffff'),
     signKitchen: makeSignTexture(['KITCHEN'], '#5c3d2e', '#ffffff'),
     signBed1: makeSignTexture(['BEDROOM 1'], '#5c3d2e', '#ffffff'),
@@ -653,14 +631,24 @@ function buildFloor(baseY, level) {
   wallBox(0.3, wallH, HOUSE_Z_MAX * 2 + 0.6, 0xe9e2d0, HOUSE_X_MIN, y, 0);
   wallBox(0.3, wallH, HOUSE_Z_MAX * 2 + 0.6, 0xe9e2d0, HOUSE_X_MAX, y, 0);
 
-  // Central divider wall (front rooms), with a doorway gap
-  wallBox(0.25, wallH, 6.5, 0xe9e2d0, 0, y, -9.75);
-  wallBox(0.25, wallH, 6.5, 0xe9e2d0, 0, y, -0.25);
+  // Window panes on the exterior walls (visual only)
+  const winY = baseY + wallH * 0.55;
+  for (const wx of [-11, -6, 6, 11]) {
+    texturedBox(1.6, 1.2, 0.06, wx, winY, HOUSE_Z_MIN + 0.18, { map: TEX.window, repeatU: 1, repeatV: 1, castShadow: false });
+    texturedBox(1.6, 1.2, 0.06, wx, winY, HOUSE_Z_MAX - 0.18, { map: TEX.window, repeatU: 1, repeatV: 1, castShadow: false });
+  }
+  for (const wz of [-8, -2, 5, 9]) {
+    texturedBox(0.06, 1.2, 1.6, HOUSE_X_MIN + 0.18, winY, wz, { map: TEX.window, repeatU: 1, repeatV: 1, castShadow: false });
+    texturedBox(0.06, 1.2, 1.6, HOUSE_X_MAX - 0.18, winY, wz, { map: TEX.window, repeatU: 1, repeatV: 1, castShadow: false });
+  }
 
   // Foyer/hallway pinch near the front entrance — narrows the entry
-  // into a proper hall before opening into the wider rooms beyond
+  // into a proper hall before opening into the wider rooms beyond.
+  // (The old central divider wall here was removed — it was catching
+  // players; an open-concept living/kitchen is also more realistic.)
   wallBox(0.25, wallH, 3.6, 0xe9e2d0, -3, y, -10.8);
   wallBox(0.25, wallH, 3.6, 0xe9e2d0, 3, y, -10.8);
+  box(6.5, 0.4, 0.25, 0x5c3d2e, 0, baseY + 2.6, -9, false); // lintel over the foyer doorway
 
   // A few ceiling lamps for atmosphere
   addLampFixture(-8, baseY + wallH - 0.3, -6);
@@ -695,6 +683,7 @@ function buildFloor(baseY, level) {
     wallBox(0.25, wallH, 4, 0xe9e2d0, -8, y, 11); // divider: bathroom vs laundry
     wallBox(4.6, wallH, 0.25, 0xe9e2d0, -13, y, 9);   // bathroom front wall, west segment
     wallBox(0.8, wallH, 0.25, 0xe9e2d0, -8.4, y, 9);  // bathroom front wall, east segment (door gap between)
+    box(2.1, 0.4, 0.25, 0x5c3d2e, -9.8, baseY + 2.6, 9, false); // door lintel
     wallBox(0.6, 0.8, 0.6, 0xffffff, -11, 0.4, 11); // toilet
     wallBox(0.8, 0.9, 0.5, 0xffffff, -13, 0.45, 11.7); // sink
     wallBox(1.8, 0.7, 3, 0xffffff, -10, 0.35, 10.5); // tub
@@ -706,9 +695,13 @@ function buildFloor(baseY, level) {
     wallBox(1, 1, 1, 0x8a6c4a, 8, 0.5, 12.5); // extra crates
     wallBox(0.6, 1, 0.6, 0xadb5bd, 12, 0.5, 9.5); // utility bin
   } else {
-    // --- Hallway pinch mirrors the foyer below, leading to the bedroom wing ---
-    wallBox(0.25, wallH, 0.25, 0xe9e2d0, -3, y, -9); // hall post (visual anchor)
-    wallBox(0.25, wallH, 0.25, 0xe9e2d0, 3, y, -9);
+    // --- Hallway, walled on both sides with doorways into each bedroom ---
+    wallBox(0.25, wallH, 4, 0xe9e2d0, -3, y, -7);   // west wall, north segment
+    wallBox(0.25, wallH, 5, 0xe9e2d0, -3, y, 0.5);  // west wall, south segment (gap = bedroom 1 door)
+    wallBox(0.25, wallH, 4, 0xe9e2d0, 3, y, -7);    // east wall, north segment
+    wallBox(0.25, wallH, 5, 0xe9e2d0, 3, y, 0.5);   // east wall, south segment (gap = bedroom 2 door)
+    box(2.6, 0.4, 0.25, 0x5c3d2e, -3, baseY + 2.6, -3.5, false); // door lintel, bedroom 1
+    box(2.6, 0.4, 0.25, 0x5c3d2e, 3, baseY + 2.6, -3.5, false);  // door lintel, bedroom 2
 
     // --- Home office, split off from Bedroom 2 ---
     wallBox(0.25, wallH, 3.6, 0xe9e2d0, 11, y, -1.2);
@@ -721,7 +714,7 @@ function buildFloor(baseY, level) {
     wallBox(0.6, 2.2, 2, 0x5c3d2e, -15.5, baseY + 1.1, -2); // closet
     wallBox(1.4, 1, 0.6, 0x8a6c4a, -9, baseY + 0.5, -5); // dresser
     wallBox(1, 0.9, 0.8, 0x8a6c4a, -13.5, baseY + 0.45, -6); // nightstand
-    wallBox(0.5, 1.6, 0.5, 0x2f6f4f, -6, baseY + 0.8, -11); // floor plant
+    wallBox(0.5, 1.6, 0.5, 0x2f6f4f, -13, baseY + 0.8, -8); // floor plant
 
     // --- Bedroom 2 (front-right) ---
     signPlane(2.2, 0.6, 8, baseY + 3.6, HOUSE_Z_MIN + 0.05, TEX.signBed2, 0);
@@ -731,11 +724,15 @@ function buildFloor(baseY, level) {
     wallBox(1, 0.5, 1.4, 0x557153, 12, baseY + 0.25, -10.5); // bench at foot of bed
     wallBox(0.6, 1.2, 0.6, 0x8a6c4a, 6, baseY + 0.6, -3); // side cabinet
 
-    // --- Back: small bathroom (left) + linen/storage (right) ---
-    wallBox(0.25, wallH, 4, 0xe9e2d0, 0, y, 11);
-    wallBox(0.6, 0.8, 0.6, 0xffffff, -11, baseY + 0.4, 11);
-    wallBox(0.8, 0.9, 0.5, 0xffffff, -7, baseY + 0.45, 11.7);
-    wallBox(1, 1.8, 0.5, 0x8a6c4a, -15, baseY + 0.9, 12); // linen shelf
+    // --- Back: enclosed bathroom (left) + linen room (middle) + storage (right) ---
+    wallBox(0.25, wallH, 4, 0xe9e2d0, 0, y, 11); // divider: linen vs storage
+    wallBox(0.25, wallH, 4, 0xe9e2d0, -8, y, 11); // divider: bathroom vs linen
+    wallBox(4.6, wallH, 0.25, 0xe9e2d0, -13, y, 9);   // bathroom front wall, west segment
+    wallBox(0.8, wallH, 0.25, 0xe9e2d0, -8.4, y, 9);  // bathroom front wall, east segment (door gap between)
+    box(2.1, 0.4, 0.25, 0x5c3d2e, -9.8, baseY + 2.6, 9, false); // door lintel
+    wallBox(0.6, 0.8, 0.6, 0xffffff, -11, baseY + 0.4, 11); // toilet
+    wallBox(0.8, 0.9, 0.5, 0xffffff, -13, baseY + 0.45, 11.7); // sink
+    wallBox(1, 1.8, 0.5, 0x8a6c4a, -4, baseY + 0.9, 12); // linen shelf
 
     wallBox(2, 2, 0.6, 0x8a6c4a, 8, baseY + 1, 12); // linen closet
     wallBox(1.2, 1.2, 1.2, 0x8a6c4a, 13, baseY + 0.6, 11); // storage boxes
@@ -784,12 +781,44 @@ function makeLimbPivot(jointX, jointY, jointZ, radius, length, color) {
 }
 
 function addFace(group, headY) {
-  const face = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.4, 0.4),
-    new THREE.MeshBasicMaterial({ map: TEX.face, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+  // Real 3D geometry instead of a flat decal — a flat plane is only
+  // visible within a narrow head-on viewing cone, which is almost
+  // certainly why the old texture-based face never actually showed up
+  // during normal third-person play.
+  const eyeGeo = new THREE.SphereGeometry(0.045, 8, 8);
+  const eyeMat = new THREE.MeshStandardMaterial({ color: 0x241a12 });
+  const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
+  eyeL.position.set(-0.11, headY + 0.03, 0.285);
+  const eyeR = new THREE.Mesh(eyeGeo, eyeMat);
+  eyeR.position.set(0.11, headY + 0.03, 0.285);
+  group.add(eyeL, eyeR);
+
+  const highlightGeo = new THREE.SphereGeometry(0.015, 6, 6);
+  const highlightMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const hlL = new THREE.Mesh(highlightGeo, highlightMat);
+  hlL.position.set(-0.095, headY + 0.045, 0.315);
+  const hlR = new THREE.Mesh(highlightGeo, highlightMat);
+  hlR.position.set(0.125, headY + 0.045, 0.315);
+  group.add(hlL, hlR);
+
+  const mouth = new THREE.Mesh(
+    new THREE.TorusGeometry(0.09, 0.015, 6, 10, Math.PI * 0.8),
+    new THREE.MeshStandardMaterial({ color: 0x7a2e20 })
   );
-  face.position.set(0, headY + 0.03, 0.33);
-  group.add(face);
+  mouth.position.set(0, headY - 0.13, 0.24);
+  mouth.rotation.set(-0.2, 0, Math.PI);
+  group.add(mouth);
+}
+
+function addHair(group, headY, color) {
+  // Partial sphere "cap" covering the top of the head
+  const hair = new THREE.Mesh(
+    new THREE.SphereGeometry(0.335, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.55),
+    new THREE.MeshStandardMaterial({ color })
+  );
+  hair.position.y = headY;
+  hair.castShadow = true;
+  group.add(hair);
 }
 
 // ---- Avatar builder: barong (men), filipiniana (women), NBI uniform
@@ -909,6 +938,7 @@ function buildAvatar(kind) {
   head.castShadow = true;
   group.add(head);
   addFace(group, 1.75);
+  addHair(group, 1.75, 0x2b1d14);
 
   const pin = new THREE.Mesh(
     new THREE.SphereGeometry(0.06, 8, 8),
@@ -1256,7 +1286,7 @@ document.addEventListener('touchmove', (e) => {
     const dy = t.clientY - lookDragLastY;
     lookDragLastX = t.clientX;
     lookDragLastY = t.clientY;
-    playerState.ry += dx * LOOK_SENSITIVITY;
+    playerState.ry -= dx * LOOK_SENSITIVITY;
     playerState.pitch = THREE.MathUtils.clamp(playerState.pitch - dy * LOOK_SENSITIVITY, -1.1, 1.1);
     break;
   }
@@ -1284,7 +1314,7 @@ document.addEventListener('mousemove', (e) => {
   const dy = e.clientY - lookDragLastY;
   lookDragLastX = e.clientX;
   lookDragLastY = e.clientY;
-  playerState.ry += dx * LOOK_SENSITIVITY;
+  playerState.ry -= dx * LOOK_SENSITIVITY;
   playerState.pitch = THREE.MathUtils.clamp(playerState.pitch - dy * LOOK_SENSITIVITY, -1.1, 1.1);
 });
 document.addEventListener('mouseup', () => { lookMouseDown = false; });
